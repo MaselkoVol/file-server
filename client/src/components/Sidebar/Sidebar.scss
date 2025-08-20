@@ -1,0 +1,22 @@
+.sidebar {
+  background-color: hsl(var(--clr-secondary-dark));
+  box-shadow: var(--shadow-outset-sm) var(--shadow-outset-color-primary);
+
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: var(--page-padding-desktop);
+  &__logo {
+    font-size: 1.5em;
+  }
+
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__more-button {
+    font-size: 2em;
+    padding: 0.15em;
+  }
+}

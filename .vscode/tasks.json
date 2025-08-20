@@ -1,0 +1,17 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start Client Server",
+      "type": "shell",
+      "command": "cd client && npm run dev -- --host",
+      "group": "build"
+    },
+    {
+      "label": "Preview Client Server",
+      "type": "shell",
+      "command": "cd client && npm run build && npm run preview -- --host",
+      "group": "build"
+    }
+  ]
+}

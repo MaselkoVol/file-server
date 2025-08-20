@@ -1,0 +1,81 @@
+.search-field {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: var(--input-gap);
+
+  &__input-wrapper {
+    position: relative;
+  }
+
+  &__input {
+    width: 100%;
+    outline: none;
+    border-radius: var(--border-radius-md);
+    padding: var(--search-input-padding);
+    border: var(--border) var(--border-color-primary);
+    box-shadow: var(--shadow-inset-top-left) var(--shadow-inset-color-primary);
+  }
+  &.secondary &__input {
+    background-color: hsl(var(--clr-secondary-light));
+  }
+  &.accent &__input {
+    background-color: hsl(var(--clr-accent-light));
+  }
+  &[data-invalid] &__input {
+    color: hsl(var(--clr-fixed-main));
+    background-color: hsl(var(--clr-error-light));
+    box-shadow: var(--shadow-inset-top-left) var(--shadow-inset-color-fixed);
+  }
+
+  &__search-icon,
+  &__clear-button,
+  &__spinner {
+    font-size: var(--search-input-icon-font-size);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &__search-icon {
+    padding: 0.06em;
+    left: var(--search-input-icon-offset);
+  }
+  &__spinner {
+    padding: 0.1em;
+    left: var(--search-input-icon-offset);
+  }
+
+  &[data-invalid] &__search-icon,
+  &[data-invalid] &__spinner {
+    color: hsl(var(--clr-fixed-main));
+  }
+
+  &__clear-button {
+    padding: 0.1em;
+    right: var(--search-input-icon-offset);
+  }
+  &[data-invalid] &__clear-button {
+    color: hsl(var(--clr-fixed-main));
+    background-color: hsl(var(--clr-error-light));
+    border: var(--border) var(--border-color-fixed);
+    box-shadow: var(--shadow-inset-bottom-right) var(--shadow-inset-color-fixed);
+  }
+
+  &__label {
+    font-size: var(--input-label-font-size);
+  }
+  &__description {
+    font-size: var(--input-description-font-size);
+  }
+  &__error {
+    display: block;
+    border-radius: var(--border-radius-sm);
+    padding: var(--input-error-padding);
+    font-weight: 700;
+    font-size: var(--input-error-font-size);
+    width: fit-content;
+    color: hsl(var(--clr-fixed-main));
+    background-color: hsl(var(--clr-error-light));
+  }
+}

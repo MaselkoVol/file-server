@@ -1,0 +1,45 @@
+.folder-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1em;
+  font-weight: 700;
+  border: var(--border) transparent;
+  padding: var(--list-option-padding) var(--page-padding-mobile);
+  border-bottom: var(--border) var(--border-color-primary);
+  margin-bottom: 0.5em;
+  font-size: var(--font-size-mobile);
+
+  &__name {
+    flex: 1;
+    display: flex;
+    gap: 1em;
+    align-items: center;
+  }
+  &__size {
+    width: 12ch;
+  }
+  &__date {
+    width: 18ch;
+  }
+  &__date.hidden,
+  &__size.hidden {
+    display: none;
+  }
+
+  &__more-options,
+  &__checkbox {
+    font-size: 1.4em;
+  }
+  &__more-options {
+    padding: 0.15em;
+  }
+
+  @media (min-width: 768px) and (min-height: 432px) {
+    padding: var(--list-option-padding);
+  }
+
+  @media (hover: hover) {
+    font-size: var(--font-size-desktop);
+  }
+}

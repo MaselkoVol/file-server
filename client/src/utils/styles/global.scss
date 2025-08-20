@@ -1,0 +1,57 @@
+:root {
+  --page-padding-mobile: 1em;
+  --page-padding-desktop: 1.5em;
+  --font-size-mobile: 1.2em;
+  --font-size-desktop: 1em;
+
+  --list-option-padding: 0.4em;
+  --list-gap: 0.2em;
+  --list-header-gap: 0.5em;
+
+  --border: 1px solid;
+  --border-color-primary: hsla(var(--clr-primary-main), 0.2);
+  --border-color-fixed: hsla(var(--clr-fixed-main), 0.2);
+
+  --border-radius-sm: 0.3em;
+  --border-radius-md: 0.6em;
+  --border-radius-lg: 0.9em;
+
+  --shadow-inset-bottom-right: inset -1px -1px 3px;
+  --shadow-inset-top-left: inset 1px 1px 3px;
+  --shadow-inset-color-primary: hsla(var(--clr-primary-main), 0.1);
+  --shadow-inset-color-fixed: hsla(var(--clr-fixed-main), 0.1);
+
+  --shadow-outset-sm: 0 0 2px;
+  --shadow-outset-md: 0 0 4px;
+  --shadow-outset-lg: 0 0 6px;
+  --shadow-outset-color-primary: hsla(var(--clr-primary-main), 0.2);
+  --shadow-outset-color-fixed: hsla(var(--clr-fixed-main), 0.2);
+
+  --outline: 2px solid hsla(var(--clr-primary-main), 0.8);
+  --outline-offset: 2px;
+
+  --input-gap: 0.2em;
+  --input-padding: 0.6em 1em;
+  --input-error-padding: 0.2em 0.6em;
+  --input-label-font-size: 0.9em;
+  --input-description-font-size: 0.75em;
+  --input-error-font-size: 0.75em;
+
+  --search-input-padding: 0.6em 2.5em;
+  --search-input-icon-font-size: 1.8em;
+  --search-input-icon-offset: 0.2em;
+
+  --modal-shadow: 0 0.2em 1em hsla(var(--clr-secondary-main), 0.2);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}

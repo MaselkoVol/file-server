@@ -1,0 +1,41 @@
+.header {
+  background-color: var(--clr-secondary-dark);
+  border-bottom: var(--border) var(--border-color-primary);
+  box-shadow: var(--shadow-outset-sm) var(--shadow-outset-color-primary);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1em;
+  padding: var(--page-padding-mobile);
+
+  &__logo {
+    display: none;
+  }
+
+  &__wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+  }
+  &__folder-search {
+    flex: 1;
+  }
+
+  &__folder-tree-modal,
+  &__more-button {
+    font-size: 2.4em;
+    padding: 0.2em;
+  }
+
+  @media (min-width: 360px) {
+    &__logo {
+      font-size: 1.2em;
+      display: block;
+    }
+    &__wrapper {
+      max-width: 300px;
+    }
+  }
+}

@@ -1,0 +1,78 @@
+@mixin commonTheme {
+  --clr-fixed-light: 0, 0%, 100%;
+  --clr-fixed-main: 0, 0%, 98%;
+  --clr-fixed-dark: 0, 0%, 96%;
+
+  --clr-error-light: 340, 100%, 52%;
+  --clr-error-main: 340, 100%, 50%;
+  --clr-error-dark: 340, 100%, 48%;
+
+  --clr-success-light: 130, 50%, 52%;
+  --clr-success-main: 130, 50%, 50%;
+  --clr-success-dark: 130, 50%, 48%;
+
+  --clr-warning-light: 30, 100%, 52%;
+  --clr-warning-main: 30, 100%, 50%;
+  --clr-warning-dark: 30, 100%, 48%;
+
+  --clr-info-light: 200, 100%, 52%;
+  --clr-info-main: 200, 100%, 50%;
+  --clr-info-dark: 200, 100%, 48%;
+}
+
+@mixin lightTheme {
+  --clr-primary-light: 0, 0%, 30%;
+  --clr-primary-main: 0, 0%, 20%;
+  --clr-primary-dark: 0, 0%, 10%;
+
+  --clr-secondary-light: 0, 0%, 100%;
+  --clr-secondary-main: 0, 0%, 98%;
+  --clr-secondary-dark: 0, 0%, 96%;
+
+  --clr-accent-light: 260, 100%, 94%;
+  --clr-accent-main: 260, 100%, 92%;
+  --clr-accent-dark: 260, 100%, 90%;
+}
+
+@mixin darkTheme {
+  --clr-primary-light: 0, 0%, 97%;
+  --clr-primary-main: 0, 0%, 95%;
+  --clr-primary-dark: 0, 0%, 93%;
+
+  --clr-secondary-light: 0, 0%, 14%;
+  --clr-secondary-main: 0, 0%, 12%;
+  --clr-secondary-dark: 0, 0%, 10%;
+
+  --clr-accent-light: 260, 100%, 62%;
+  --clr-accent-main: 260, 100%, 60%;
+  --clr-accent-dark: 260, 100%, 58%;
+}
+
+:root {
+  @include lightTheme;
+  @include commonTheme;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    @include darkTheme;
+  }
+}
+
+html {
+  color-scheme: dark light;
+}
+
+html[data-theme="light"] {
+  @include lightTheme;
+  color-scheme: light;
+}
+
+html[data-theme="dark"] {
+  @include darkTheme;
+  color-scheme: dark;
+}
+
+html[data-theme="purple"] {
+  @include darkTheme;
+  color-scheme: dark;
+}

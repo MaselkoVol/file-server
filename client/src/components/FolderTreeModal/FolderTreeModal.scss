@@ -1,0 +1,20 @@
+.folder-tree-model {
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--page-padding-mobile);
+    padding: var(--page-padding-mobile);
+    padding-bottom: 0;
+    margin-bottom: var(--list-header-gap);
+  }
+  &__title {
+    font-weight: 700;
+    font-size: 1.4em;
+  }
+  @media (min-width: 768px) and (min-height: 576px) {
+    &__wrapper {
+      display: none;
+    }
+  }
+}

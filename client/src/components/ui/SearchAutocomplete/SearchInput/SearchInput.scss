@@ -1,0 +1,15 @@
+.search-input {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  padding: var(--page-padding-mobile);
+  padding-bottom: 0;
+  margin-bottom: var(--list-header-gap);
+
+  @media (min-width: 1024px) and (min-height: 576px) {
+    padding: 0;
+    &__close-button {
+      display: none;
+    }
+  }
+}
