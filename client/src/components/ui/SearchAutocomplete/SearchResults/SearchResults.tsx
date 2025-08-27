@@ -5,10 +5,10 @@ import {
 } from "@heroicons/react/16/solid";
 import { forwardRef, memo, useMemo } from "react";
 import { ListBox, ListBoxItem, type Selection } from "react-aria-components";
-import { getCaseInsensitiveRegex } from "../../../../utils/functions/getCaseInsensitiveRegex";
 import Icon from "../../Icon/Icon";
 import type { SearchAutocompleteOption } from "../SearchAutocomplete";
 import "./SearchResults.scss";
+import { getCaseInsensitiveRegex } from "../../../../shared/utils/getCaseInsensitiveRegex";
 
 type SearchResultsProps = {
   value: string;

@@ -13,7 +13,7 @@ import SearchFieldButton from "../SearchFieldButton/SearchFieldButtton";
 import "./SearchAutocomplete.scss";
 import SearchInput from "./SearchInput/SearchInput";
 import SearchResults from "./SearchResults/SearchResults";
-import { getSelectedKey } from "../../../utils/functions/getSelectedKey";
+import { getSelectedKey } from "../../../shared/utils/getSelectedKey";
 
 export type SearchAutocompleteOption = {
   id: number;

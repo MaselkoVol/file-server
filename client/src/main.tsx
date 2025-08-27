@@ -1,17 +1,24 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
-import "./utils/styles/global.scss";
-import "./utils/styles/setup.scss";
-import "./utils/styles/themes.scss";
+import "./shared/i18n";
+
+import "./shared/utils/styles/global.scss";
+import "./shared/utils/styles/setup.scss";
+import "./shared/utils/styles/themes.scss";
 
 import { BrowserRouter } from "react-router";
-import AppRoutes from "./AppRoutes";
+import AppRoutes from "./pages/AppRoutes";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter>
-      <AppRoutes />
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <AppRoutes />
+      </BrowserRouter>
+    </QueryClientProvider>
   </StrictMode>,
 );

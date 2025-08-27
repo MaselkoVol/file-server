@@ -6,7 +6,6 @@
   font-weight: 700;
   border: var(--border) transparent;
   padding: var(--list-option-padding) var(--page-padding-mobile);
-  border-bottom: var(--border) var(--border-color-primary);
   margin-bottom: 0.5em;
   font-size: var(--font-size-mobile);
 
@@ -17,10 +16,12 @@
     align-items: center;
   }
   &__size {
-    width: 12ch;
+    flex: 0 0 12ch;
+    text-align: center;
   }
   &__date {
-    width: 18ch;
+    flex: 0 0 18ch;
+    text-align: center;
   }
   &__date.hidden,
   &__size.hidden {
@@ -37,6 +38,7 @@
 
   @media (min-width: 768px) and (min-height: 432px) {
     padding: var(--list-option-padding);
+    border-bottom: var(--border) var(--border-color-primary);
   }
 
   @media (hover: hover) {

@@ -9,8 +9,8 @@ const MainPage = () => {
     <div className="wrapper">
       <Sidebar className="wrapper__sidebar" />
       <Header className="wrapper__header" />
-      <main className="wrapper__main">
-        <div className="wrapper__folder-wrapper">
+      <main className="main">
+        <div className="main__wrapper">
           <Folder className="wrapper__folder" />
         </div>
       </main>

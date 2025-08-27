@@ -11,7 +11,7 @@ import Icon from "../ui/Icon/Icon";
 import IconButton from "../ui/IconButton/IconButton";
 import "./FolderTree.scss";
 import { items } from "./mock";
-import { getSelectedKey } from "../../utils/functions/getSelectedKey";
+import { getSelectedKey } from "../../shared/utils/getSelectedKey";
 
 export type FolderTreeOption = {
   id: number;

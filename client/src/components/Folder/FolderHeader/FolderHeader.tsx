@@ -3,8 +3,10 @@ import { forwardRef, memo, useEffect, useState } from "react";
 import type { Selection } from "react-aria-components";
 import Checkbox from "../../ui/Checkbox/Checkbox";
 import IconButton from "../../ui/IconButton/IconButton";
-import type { FolderBreakpointsType, FolderOption } from "../Folder";
+import type { FolderOption } from "../Folder";
 import "./FolderHeader.scss";
+import { FOLDER_BREAKPOINTS } from "../../../shared/constants";
+import { useTranslation } from "react-i18next";
 
 export type FolderHeaderProps = {
   className?: string;
@@ -12,25 +14,15 @@ export type FolderHeaderProps = {
   selected: Selection;
   setSelected: React.Dispatch<React.SetStateAction<Selection>>;
   options: FolderOption[];
-  folderBreakpoints: FolderBreakpointsType;
 };
 
 const FolderHeader = forwardRef<HTMLDivElement, FolderHeaderProps>(
-  (
-    {
-      className,
-      folderWidth,
-      selected,
-      setSelected,
-      options,
-      folderBreakpoints,
-    },
-    ref,
-  ) => {
+  ({ className, folderWidth, selected, setSelected, options }, ref) => {
+    const { t } = useTranslation("folder");
     const [multipleSelected, setMultipleSelected] = useState(false);
     const handleMultipleCheckboxPressed = () => {
       if (!multipleSelected) {
-        setSelected(new Set(options.map((option) => option.id)));
+        setSelected(new Set(options.map((option) => option.pathname)));
         return;
       }
       setSelected(new Set());
@@ -54,17 +46,17 @@ const FolderHeader = forwardRef<HTMLDivElement, FolderHeaderProps>(
             isSelected={multipleSelected}
             onPress={handleMultipleCheckboxPressed}
           />
-          <p className="folder-header__name-title">Name</p>
+          <p className="folder-header__name-title">{t("NAME")}</p>
         </div>
         <p
-          className={`folder-header__size ${folderWidth < folderBreakpoints[1] ? "hidden" : ""}`}
+          className={`folder-header__size ${folderWidth < FOLDER_BREAKPOINTS[1] ? "hidden" : ""}`}
         >
-          Size
+          {t("SIZE")}
         </p>
         <p
-          className={`folder-header__date ${folderWidth < folderBreakpoints[0] ? "hidden" : ""}`}
+          className={`folder-header__date ${folderWidth < FOLDER_BREAKPOINTS[0] ? "hidden" : ""}`}
         >
-          Date
+          {t("DATE")}
         </p>
         <IconButton
           isDisabled={Array.from(selected).length === 0}

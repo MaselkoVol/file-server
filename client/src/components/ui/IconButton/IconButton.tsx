@@ -1,7 +1,7 @@
 import { forwardRef, memo } from "react";
 import Button, { type ButtonProps } from "../Button/Button";
-import "./IconButton.scss";
 export type IconButtonProps = {} & ButtonProps;
+import "./IconButton.scss";
 
 const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
   ({ className, children, ...props }, ref) => {
@@ -9,8 +9,8 @@ const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
       <Button
         type="button"
         ref={ref}
-        className={`${className} icon-button`}
         {...props}
+        className={`${className} icon-button`}
       >
         {children}
       </Button>

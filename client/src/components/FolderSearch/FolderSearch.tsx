@@ -10,8 +10,8 @@ import SearchAutocomplete, {
   type SearchAutocompleteOption,
 } from "../ui/SearchAutocomplete/SearchAutocomplete";
 import { mockOptions } from "./mock";
-import { getCaseInsensitiveRegex } from "../../utils/functions/getCaseInsensitiveRegex";
 import "./FolderSearch.scss";
+import { getCaseInsensitiveRegex } from "../../shared/utils/getCaseInsensitiveRegex";
 
 export type FolderSearchProps = {
   className?: string;
@@ -52,7 +52,7 @@ const FolderSearch = forwardRef<HTMLInputElement, FolderSearchProps>(
 
     const alertValue = useCallback(
       (option: SearchAutocompleteOption) => console.log(option.name),
-      []
+      [],
     );
 
     return (
@@ -70,7 +70,7 @@ const FolderSearch = forwardRef<HTMLInputElement, FolderSearchProps>(
         FolderSearch
       </SearchAutocomplete>
     );
-  }
+  },
 );
 
 export default memo(FolderSearch);

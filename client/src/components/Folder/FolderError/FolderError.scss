@@ -1,0 +1,9 @@
+.folder-error {
+  flex: 1;
+  padding: var(--page-padding-mobile);
+
+  @media (min-width: 768px) and (min-height: 432px) {
+    padding: var(--page-padding-desktop);
+    justify-content: center;
+  }
+}

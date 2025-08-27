@@ -1,62 +1,51 @@
-import {
-  DocumentTextIcon,
-  EllipsisVerticalIcon,
-  FolderIcon,
-} from "@heroicons/react/16/solid";
 import { forwardRef, memo, useCallback, useMemo } from "react";
-import {
-  GridList,
-  GridListItem,
-  type Key,
-  type Selection,
-} from "react-aria-components";
+import { GridList, type Key, type Selection } from "react-aria-components";
+import { useNavigate } from "react-router";
 import { useMediaQuery } from "usehooks-ts";
-import Checkbox from "../../ui/Checkbox/Checkbox";
-import IconButton from "../../ui/IconButton/IconButton";
-import type { FolderBreakpointsType, FolderOption } from "../Folder";
+import { createItemBase } from "../../../shared/utils/createItemBase";
+import type { FolderOption } from "../Folder";
+import FolderItem from "../FolderItem/FolderItem";
 import "./FolderGrid.scss";
-import Icon from "../../ui/Icon/Icon";
+import { getAbsolutePathname } from "../../../shared/utils/pathname";
+
 export type FolderGridProps = {
   className?: string;
   folderWidth: number;
   selected: Selection;
   setSelected: React.Dispatch<React.SetStateAction<Selection>>;
   options: FolderOption[];
-  folderBreakpoints: FolderBreakpointsType;
-  onChoose: (option: FolderOption) => void;
+};
+
+export type modifiedFolderOption = FolderOption & {
+  path: string;
+  name: string;
+  folderWidth: number;
 };
 
 const FolderGrid = forwardRef<HTMLDivElement, FolderGridProps>(
-  (
-    {
-      className,
-      folderWidth,
-      selected,
-      setSelected,
-      options,
-      folderBreakpoints,
-      onChoose,
-    },
-    ref,
-  ) => {
+  ({ className, folderWidth, selected, setSelected, options }, ref) => {
+    const navigate = useNavigate();
+
     const handleGridAction = useCallback(
-      (key: Key) => {
-        const option = options.find((option) => option.id === key);
-        if (!option) return;
-
-        alert("salamaleikum");
-        onChoose(option);
+      (pathname: Key) => {
+        const option = options.find((option) => option.pathname === pathname);
+        if (!option || !option.isFolder) return;
+        navigate(getAbsolutePathname(pathname.toString()));
       },
-      [options],
+      [navigate, options],
     );
-
     const canHover = useMediaQuery("(hover: hover)");
 
-    const modifiedOptions = useMemo(() => {
-      return options.map((option) => ({
-        ...option,
-        folderWidth: folderWidth,
-      }));
+    const modifiedOptions: modifiedFolderOption[] = useMemo(() => {
+      return options.map((option) => {
+        const itemBase = createItemBase(option.pathname);
+        return {
+          ...option,
+          path: itemBase.path,
+          name: itemBase.name,
+          folderWidth: folderWidth,
+        };
+      });
     }, [options, folderWidth]);
 
     return (
@@ -72,65 +61,11 @@ const FolderGrid = forwardRef<HTMLDivElement, FolderGridProps>(
         items={modifiedOptions}
       >
         {(item) => (
-          <GridListItem className="folder-grid__item" textValue={item.name}>
-            {({ isSelected }) => (
-              <>
-                <div className="folder-grid__name">
-                  <Icon className="folder-grid__icon">
-                    {item.type === "file" ? (
-                      <DocumentTextIcon />
-                    ) : (
-                      <FolderIcon />
-                    )}
-                  </Icon>
-                  {item.type === "file" ? (
-                    <>
-                      <span className="folder-grid__name-text">
-                        {item.name.split(".").slice(0, -1).join(".")}
-                      </span>
-                      <span className="folder-grid__name-ext">
-                        {"." + item.name.split(".").slice(-1)[0]}
-                      </span>
-                    </>
-                  ) : (
-                    <span className="folder-grid__name-text">{item.name}</span>
-                  )}
-                </div>
-                <p
-                  className={`folder-grid__size ${item.folderWidth < folderBreakpoints[1] ? "hidden" : ""}`}
-                >
-                  {item.size}
-                </p>
-                <p
-                  className={`folder-grid__date ${item.folderWidth < folderBreakpoints[0] ? "hidden" : ""}`}
-                >
-                  {item.createdAt.toLocaleString("en-us", {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                  })}
-                </p>
-                {isSelected ? (
-                  <Checkbox
-                    aria-label="Is selected"
-                    isDisabled
-                    variant="accent"
-                    slot="selection"
-                    className="folder-grid__checkbox"
-                  />
-                ) : (
-                  <IconButton
-                    variant="transparent-secondary"
-                    className="folder-grid__more-options"
-                    aria-label="Info"
-                    onPress={() => console.log(`Info for ${item.name}...`)}
-                  >
-                    <EllipsisVerticalIcon />
-                  </IconButton>
-                )}
-              </>
-            )}
-          </GridListItem>
+          <FolderItem
+            id={item.pathname}
+            textValue={item.pathname}
+            item={item}
+          />
         )}
       </GridList>
     );

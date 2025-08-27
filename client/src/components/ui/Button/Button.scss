@@ -8,9 +8,9 @@
 .button {
   user-select: none;
   border-radius: var(--border-radius-md);
-  padding: 0.6em 2em;
   font-weight: 700;
   transition: all 0.1s ease;
+  padding: 0.6em 2em;
 
   &[data-hovered] {
     box-shadow: var(--shadow-outset-md) var(--shadow-outset-color-primary);

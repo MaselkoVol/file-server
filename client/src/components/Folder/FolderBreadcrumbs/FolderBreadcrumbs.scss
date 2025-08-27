@@ -1,0 +1,22 @@
+.breadcrumbs {
+  display: flex;
+  font-size: 1.2em;
+  align-items: center;
+  font-weight: 700;
+  padding: 0.5em var(--page-padding-mobile);
+  gap: 0.5em;
+
+  &__link {
+    max-width: 36%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  &__separator {
+    font-size: 1.4em;
+  }
+
+  @media (min-width: 768px) and (min-height: 432px) {
+    padding: 0.5em var(--page-padding-desktop);
+  }
+}

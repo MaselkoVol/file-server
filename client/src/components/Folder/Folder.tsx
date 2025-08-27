@@ -1,57 +1,103 @@
-import { forwardRef, memo, useRef, useState, type RefObject } from "react";
+import { useQuery } from "@tanstack/react-query";
+import {
+  forwardRef,
+  memo,
+  useMemo,
+  useRef,
+  useState,
+  type RefObject,
+} from "react";
 import { type Selection } from "react-aria-components";
+import { useLocation } from "react-router";
 import { useResizeObserver } from "usehooks-ts";
+import { getFolderContent } from "../../api/folders";
+import Spinner from "../ui/Spinner/Spinner";
 import "./Folder.scss";
+import FolderError from "./FolderError/FolderError";
 import FolderGrid from "./FolderGrid/FolderGrid";
 import FolderHeader from "./FolderHeader/FolderHeader";
-import { rows } from "./mock";
+import { getRelativePathname } from "../../shared/utils/pathname";
+import FolderBreadcrumbs from "./FolderBreadcrumbs/FolderBreadcrumbs";
 
 export type FolderOption = {
-  id: number;
-  name: string;
-  type: "file" | "folder";
-  size: number;
-  createdAt: Date;
+  pathname: string;
+  isFolder: boolean;
+  size?: number;
+  date?: Date;
 };
-
-export type FolderBreakpointsType = [number, number];
-const FOLDER_BREAKPOINTS: FolderBreakpointsType = [580, 400];
 
 export type FolderProps = {
   className?: string;
 };
 
 const Folder = forwardRef<HTMLDivElement, FolderProps>(({ className }, ref) => {
-  const [options] = useState<FolderOption[]>(rows);
+  const location = useLocation();
+
+  const relativePathname = useMemo(() => {
+    return getRelativePathname(decodeURIComponent(location.pathname));
+  }, [location.pathname]);
+  const { isLoading, data, isError, error, refetch } = useQuery({
+    queryKey: ["folders", location.pathname],
+    queryFn: () => getFolderContent({ pathname: relativePathname }),
+  });
+
+  const options = useMemo(() => {
+    if (!data) return [];
+
+    const folders: FolderOption[] = data.folders.map((folder) => ({
+      pathname: folder.pathname,
+      isFolder: true,
+    }));
+    const files: FolderOption[] = data.files.map((file) => ({
+      pathname: file.pathname,
+      isFolder: false,
+      size: file.size,
+      date: new Date(file.date),
+    }));
+    return [...folders, ...files];
+  }, [data]);
+
   const [selected, setSelected] = useState<Selection>(new Set());
 
-  const fileRef = useRef<HTMLDivElement>(null);
+  const folderRef = useRef<HTMLDivElement>(null);
   const { width: folderWidth } = useResizeObserver({
-    ref: fileRef as RefObject<HTMLElement>,
+    ref: folderRef as RefObject<HTMLElement>,
   });
 
   return (
-    <div ref={ref} className={`${className} folder`}>
-      <div ref={fileRef} className="folder__wrapper">
-        {folderWidth && (
-          <>
-            <FolderHeader
-              folderWidth={folderWidth}
-              options={options}
-              selected={selected}
-              setSelected={setSelected}
-              folderBreakpoints={FOLDER_BREAKPOINTS}
-            />
-            <FolderGrid
-              onChoose={() => {}}
-              folderWidth={folderWidth}
-              options={options}
-              selected={selected}
-              setSelected={setSelected}
-              folderBreakpoints={FOLDER_BREAKPOINTS}
-            />
-          </>
-        )}
+    <div className="folder">
+      {relativePathname && <FolderBreadcrumbs pathname={relativePathname} />}
+      <div ref={ref} className={`${className} folder__wrapper`}>
+        <div ref={folderRef} className="folder__content">
+          {folderWidth && (
+            <>
+              <FolderHeader
+                folderWidth={folderWidth}
+                options={options}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              {isLoading ? (
+                <div className="folder__loader">
+                  <Spinner className="folder__loader-icon" />
+                </div>
+              ) : isError ? (
+                <FolderError
+                  refetch={refetch}
+                  isHome={relativePathname === ""}
+                  errorCode={error.message}
+                />
+              ) : (
+                <FolderGrid
+                  folderWidth={folderWidth}
+                  options={options}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              )}
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

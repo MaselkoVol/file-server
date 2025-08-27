@@ -1,0 +1,19 @@
+.skeleton {
+  background-image: linear-gradient(
+    90deg,
+    hsla(var(--clr-secondary-glow)) 40%,
+    hsla(var(--clr-secondary-shine)) 50%,
+    hsla(var(--clr-secondary-glow)) 60%
+  );
+  background-size: 500%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position-x: 100%;
+  }
+  100% {
+    background-position-x: 0%;
+  }
+}
