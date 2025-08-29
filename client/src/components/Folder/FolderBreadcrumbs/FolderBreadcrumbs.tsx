@@ -1,54 +1,15 @@
-import { forwardRef, memo } from "react";
-import { getAbsolutePathname } from "../../../shared/utils/pathname";
-import { Link } from "react-router";
-import Button from "../../ui/Button/Button";
+import React, { forwardRef, memo } from "react";
+
+import { EllipsisHorizontalIcon } from "@heroicons/react/16/solid";
+import { getBreadcurmbsParts } from "../../../shared/utils/getBreadcrumbsParts";
+import IconLinkButton from "../../ui/buttons/IconLinkButton/IconLinkButton";
+import LinkButton from "../../ui/buttons/LinkButton/LinkButton";
 
 import "./FolderBreadcrumbs.scss";
-import IconButton from "../../ui/IconButton/IconButton";
-import { EllipsisHorizontalIcon } from "@heroicons/react/16/solid";
 
 export type FolderBreadcrumbsProps = {
   className?: string;
   pathname: string;
-};
-
-type BreadcrumbsItem = {
-  name: string;
-  pathname: string;
-};
-
-const getPathnameHome = (name: string): BreadcrumbsItem => {
-  return {
-    name: name,
-    pathname: getAbsolutePathname(""),
-  };
-};
-
-const getPathnameItem = (pathnamePart: string, absolutePathname: string) => {
-  const partIndex = absolutePathname.indexOf(pathnamePart);
-  if (partIndex < 1) return getPathnameHome(pathnamePart);
-  const partEndIndex = partIndex + pathnamePart.length;
-  const pathnameToPart = absolutePathname.slice(0, partEndIndex);
-  return {
-    name: pathnamePart,
-    pathname: pathnameToPart,
-  };
-};
-
-const getBreadcurmbsParts = (pathname: string) => {
-  if (!pathname) {
-    return [getPathnameHome("..")];
-  }
-
-  const absolutePathname = getAbsolutePathname(pathname);
-
-  const pathnameParts: BreadcrumbsItem[] = pathname
-    .split("/")
-    .map((pathnamePart) => getPathnameItem(pathnamePart, absolutePathname));
-
-  const filteredParts = pathnameParts.slice(-2);
-  filteredParts.unshift(getPathnameHome(".."));
-  return filteredParts;
 };
 
 const FolderBreadcrumbs = forwardRef<HTMLDivElement, FolderBreadcrumbsProps>(
@@ -57,18 +18,26 @@ const FolderBreadcrumbs = forwardRef<HTMLDivElement, FolderBreadcrumbsProps>(
     return (
       <div ref={ref} className={`${className} breadcrumbs`}>
         {breadcrumbsParts.map((part, idx) => (
-          <>
-            <span key={idx} className="breadcrumbs__separator">
-              /
-            </span>
-            <Link
-              key={part.pathname}
-              className="breadcrumbs__link"
-              to={part.pathname}
-            >
-              {part.name}
-            </Link>
-          </>
+          <React.Fragment key={idx}>
+            <span className="breadcrumbs__separator">/</span>
+            {part.name === ".." ? (
+              <IconLinkButton
+                variant="transparent-secondary"
+                to={part.pathname}
+                className="breadcrumbs__icon-link"
+              >
+                <EllipsisHorizontalIcon />
+              </IconLinkButton>
+            ) : (
+              <LinkButton
+                variant="transparent-secondary"
+                className="breadcrumbs__link"
+                to={part.pathname}
+              >
+                {part.name}
+              </LinkButton>
+            )}
+          </React.Fragment>
         ))}
       </div>
     );

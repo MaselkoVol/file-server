@@ -1,10 +1,10 @@
-import { forwardRef, memo, useCallback } from "react";
+import { forwardRef, memo } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
-import Button from "../../ui/Button/Button";
-import ErrorMessage from "../../ui/ErrorMessage/ErrorMessage";
-import "./FolderError.scss";
 import { getAbsolutePathname } from "../../../shared/utils/pathname";
+import Button from "../../ui/buttons/Button/Button";
+import LinkButton from "../../ui/buttons/LinkButton/LinkButton";
+import "./FolderError.scss";
+import ErrorMessage from "../../ui/messages/ErrorMessage/ErrorMessage";
 export type FolderErrorProps = {
   className?: string;
   errorCode: string;
@@ -15,11 +15,7 @@ export type FolderErrorProps = {
 const FolderError = forwardRef<HTMLDivElement, FolderErrorProps>(
   ({ className, errorCode, isHome, refetch }, ref) => {
     const { t } = useTranslation(["folder", "translation"]);
-    const navigate = useNavigate();
 
-    const handleGoHome = useCallback(() => {
-      navigate(getAbsolutePathname(""));
-    }, [navigate]);
     return (
       <ErrorMessage
         errorCode={errorCode}
@@ -35,13 +31,13 @@ const FolderError = forwardRef<HTMLDivElement, FolderErrorProps>(
           {t("TRY_AGAIN", { ns: "translation" })}
         </Button>
         {!isHome && (
-          <Button
-            onClick={handleGoHome}
+          <LinkButton
+            to={getAbsolutePathname("")}
             variant="accent"
             className="folder-error__home-button"
           >
             {t("GO_HOME", { ns: "translation" })}
-          </Button>
+          </LinkButton>
         )}
       </ErrorMessage>
     );

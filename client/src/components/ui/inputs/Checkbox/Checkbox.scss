@@ -1,0 +1,63 @@
+@mixin checkboxSelected($bgColor) {
+  &[data-selected] .checkbox__svg,
+  &[data-indeterminate] .checkbox__svg {
+    transition: all 0.2s ease;
+    stroke-dashoffset: 0;
+  }
+
+  &[data-selected] .checkbox__icon,
+  &[data-indeterminate] .checkbox__icon {
+    background-color: hsl($bgColor);
+  }
+}
+
+.checkbox {
+  display: block;
+  width: 1em;
+  height: 1em;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  overflow: visible;
+  box-shadow: var(--shadow-inset-bottom-right) var(--shadow-inset-color-primary);
+  &__icon {
+    border-radius: var(--border-radius-sm);
+    border: var(--border) var(--border-color-primary);
+    padding: 0.18em;
+    transition: all 0.1s ease;
+  }
+  &[data-hovered] {
+    box-shadow: var(--shadow-outset-md) var(--shadow-outset-color-primary);
+  }
+  &[data-focus-visible] {
+    outline: var(--outline);
+    outline-offset: var(--outline-offset);
+  }
+  &[data-pressed] {
+    box-shadow: var(--shadow-outset-lg) var(--shadow-outset-color-primary);
+  }
+
+  &[data-disabled] {
+    cursor: default;
+  }
+
+  &__svg {
+    fill: transparent;
+    stroke: hsl(var(--clr-primary-main));
+    stroke-dasharray: 32px;
+    stroke-dashoffset: 32px;
+  }
+
+  &.secondary &__icon {
+    background-color: hsl(var(--clr-secondary-light));
+  }
+  &.secondary {
+    @include checkboxSelected(var(--clr-accent-light));
+  }
+
+  &.accent &__icon {
+    background-color: hsl(var(--clr-accent-light));
+  }
+  &.accent {
+    @include checkboxSelected(var(--clr-secondary-light));
+  }
+}

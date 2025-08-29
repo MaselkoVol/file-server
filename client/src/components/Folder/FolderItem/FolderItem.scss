@@ -7,9 +7,13 @@
   outline: none;
   border: var(--border) transparent;
   cursor: default;
+  background-color: hsl(var(--clr-secondary-main));
 
+  &[data-hovered] {
+    background-color: var(--bg-hovered);
+  }
   &[data-selected] {
-    background-color: hsl(var(--clr-secondary-light));
+    background-color: var(--bg-pressed);
   }
 
   &__name {
@@ -27,7 +31,7 @@
 
   &__icon {
     flex-shrink: 0;
-    font-size: 1.2em;
+    font-size: var(--icon-font-size);
     position: relative;
     margin-right: 0.2em;
   }
@@ -47,17 +51,14 @@
   &__more-options,
   &__checkbox {
     flex: none;
-    font-size: 1.4em;
+    font-size: var(--icon-button-font-size);
   }
   &__more-options {
-    padding: 0.15em;
+    padding: 0.12em;
   }
 
   @media (min-width: 768px) and (min-height: 432px) {
     padding: var(--list-option-padding);
     border-radius: var(--border-radius-sm);
-    &[data-selected] {
-      border: var(--border) var(--border-color-primary);
-    }
   }
 }

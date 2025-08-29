@@ -1,7 +1,7 @@
 import type { AxiosResponse } from "axios";
-import type { ResponseType } from "../types";
-import { AppError, ErrorMessages } from "../errors";
 import axios from "axios";
+import { ErrorMessages } from "../errors";
+import type { ResponseType } from "../types";
 
 export const getResponse = async <T>(
   request: Promise<AxiosResponse<ResponseType<T>>>,

@@ -1,9 +1,9 @@
 import { Cog8ToothIcon } from "@heroicons/react/16/solid";
 import FolderSearch from "../FolderSearch/FolderSearch";
 import FolderTree from "../FolderTree/FolderTree";
-import IconButton from "../ui/IconButton/IconButton";
 import Logo from "../ui/Logo/Logo";
 import "./Sidebar.scss";
+import IconButton from "../ui/buttons/IconButton/IconButton";
 
 type Props = {
   className?: string;

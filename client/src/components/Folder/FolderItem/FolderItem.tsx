@@ -1,23 +1,54 @@
-import { forwardRef, memo } from "react";
-import { GridListItem, type GridListItemProps } from "react-aria-components";
-import Icon from "../../ui/Icon/Icon";
-import Checkbox from "../../ui/Checkbox/Checkbox";
-import IconButton from "../../ui/IconButton/IconButton";
 import {
+  CloudArrowDownIcon,
   DocumentTextIcon,
   EllipsisVerticalIcon,
   FolderIcon,
+  InformationCircleIcon,
+  TrashIcon,
 } from "@heroicons/react/16/solid";
 import prettyBytes from "pretty-bytes";
-import type { modifiedFolderOption } from "../FolderGrid/FolderGrid";
-import { FOLDER_BREAKPOINTS } from "../../../shared/constants";
-import "./FolderItem.scss";
+import { forwardRef, memo } from "react";
+import { GridListItem, type GridListItemProps } from "react-aria-components";
 import { useTranslation } from "react-i18next";
+import { FOLDER_BREAKPOINTS } from "../../../shared/constants";
+import IconButton from "../../ui/buttons/IconButton/IconButton";
+import { type MenuItem } from "../../ui/buttons/MenuButton/MenuButton";
+import Icon from "../../ui/Icon/Icon";
+import Checkbox from "../../ui/inputs/Checkbox/Checkbox";
+import type { ModifiedFolderOption } from "../FolderGrid/FolderGrid";
+import MenuButton from "../../ui/buttons/MenuButton/MenuButton";
+import "./FolderItem.scss";
 
 export type FolderItemProps = {
   className?: string;
-  item: modifiedFolderOption;
+  item: ModifiedFolderOption;
 } & GridListItemProps;
+
+const getMenuOptions = (item: ModifiedFolderOption) => {
+  const menu: MenuItem[] = [];
+
+  menu.push({
+    name: `${item.isFolder ? "Folder" : "File"} information`,
+    iconStart: <InformationCircleIcon />,
+    onSelect: () => console.log("name"),
+  });
+
+  menu.push({
+    name: `Delete ${item.isFolder ? "folder" : "file"}`,
+    iconStart: <TrashIcon />,
+    onSelect: () => console.log("name"),
+  });
+
+  if (!item.isFolder) {
+    menu.push({
+      name: "Download file",
+      iconStart: <CloudArrowDownIcon />,
+      onSelect: () => console.log("name"),
+    });
+  }
+
+  return menu;
+};
 
 const FolderItem = forwardRef<HTMLDivElement, FolderItemProps>(
   ({ className, item, ...props }, ref) => {
@@ -46,18 +77,16 @@ const FolderItem = forwardRef<HTMLDivElement, FolderItemProps>(
             <p
               className={`folder-item__size ${item.folderWidth < FOLDER_BREAKPOINTS[1] ? "hidden" : ""}`}
             >
-              {typeof item.size === "number" ? prettyBytes(item.size) : "-"}
+              {prettyBytes(item.size)}
             </p>
             <p
               className={`folder-item__date ${item.folderWidth < FOLDER_BREAKPOINTS[0] ? "hidden" : ""}`}
             >
-              {item.date
-                ? item.date.toLocaleString(i18n.language, {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                  })
-                : "-"}
+              {item.date.toLocaleString(i18n.language, {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              })}
             </p>
             {isSelected ? (
               <Checkbox
@@ -68,14 +97,19 @@ const FolderItem = forwardRef<HTMLDivElement, FolderItemProps>(
                 className="folder-item__checkbox"
               />
             ) : (
-              <IconButton
-                variant="transparent-secondary"
-                className="folder-item__more-options"
-                aria-label="Info"
-                onPress={() => console.log(`Info for ${item.pathname}...`)}
-              >
-                <EllipsisVerticalIcon />
-              </IconButton>
+              <MenuButton
+                placement="bottom end"
+                buttonElement={
+                  <IconButton
+                    variant="transparent-secondary"
+                    className="folder-item__more-options"
+                    aria-label="Info"
+                  >
+                    <EllipsisVerticalIcon />
+                  </IconButton>
+                }
+                items={getMenuOptions(item)}
+              />
             )}
           </>
         )}

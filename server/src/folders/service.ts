@@ -12,7 +12,7 @@ import filesService, { FileType } from "../files/service";
 import { ItemType } from "../shared/types";
 import removeRedundantPathnames from "../shared/utils/removeRedundentPathnames";
 
-export type FolderType = { pathname: string };
+export type FolderType = { pathname: string; size: number; date: Date };
 
 export type FolderContentType = {
   folders: FolderType[];
@@ -94,6 +94,20 @@ async function sortByPathname(items: { pathname: string }[]) {
   );
 }
 
+async function getFolderInfo(pathname: string) {
+  const result = await repository.getFolderInfo(pathname);
+  switch (result.status) {
+    case "OK":
+      return result.data;
+    case "NO_FOLDER":
+      throw new NoFolderError();
+    case "INVALID_PATHNAME":
+      throw new InvalidPathnameError();
+    case "INTERNAL_ERROR":
+      throw new InternalError();
+  }
+}
+
 export default {
   async createFolder(pathname: string) {
     const result = await repository.createFolder(pathname);
@@ -136,18 +150,16 @@ export default {
   async getFolderContent(pathname: string): Promise<FolderContentType> {
     console.log(pathname);
     const items = await getFolderItems(pathname);
-    const folderItems: ItemType[] = [];
+    const foldersPromises: Promise<FolderType>[] = [];
     const filesPromises: Promise<FileType>[] = [];
     for (const item of items) {
       if (item.isFolder) {
-        folderItems.push(item);
+        foldersPromises.push(getFolderInfo(item.pathname));
         continue;
       }
       filesPromises.push(filesService.getFileInfo(item.pathname));
     }
-    const folders: FolderType[] = folderItems.map((item) => ({
-      pathname: item.pathname,
-    }));
+    const folders = await Promise.all(foldersPromises);
     const files = await Promise.all(filesPromises);
     sortByPathname(folders);
     sortByPathname(files);

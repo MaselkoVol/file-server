@@ -30,10 +30,11 @@
 
   &__more-options,
   &__checkbox {
-    font-size: 1.4em;
+    flex-shrink: 02;
+    font-size: var(--icon-button-font-size);
   }
   &__more-options {
-    padding: 0.15em;
+    padding: 0.12em;
   }
 
   @media (min-width: 768px) and (min-height: 432px) {

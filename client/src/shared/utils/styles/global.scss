@@ -42,6 +42,15 @@
   --search-input-icon-offset: 0.2em;
 
   --modal-shadow: 0 0.2em 1em hsla(var(--clr-secondary-main), 0.2);
+  --popover-shadow: 0 1.5px 3px hsla(var(--clr-primary-main), 0.1);
+
+  --button-padding: 0.6em 2em;
+
+  --icon-button-font-size: 1.6em;
+  --icon-font-size: 1.4em;
+
+  --bg-hovered: hsla(var(--clr-primary-main), 0.05);
+  --bg-pressed: hsl(var(--clr-accent-light));
 }
 
 .visually-hidden {

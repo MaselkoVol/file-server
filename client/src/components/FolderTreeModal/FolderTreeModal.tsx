@@ -1,11 +1,11 @@
 import { FolderIcon } from "@heroicons/react/16/solid";
 import { forwardRef, memo, useCallback, useState } from "react";
 import FolderTree from "../FolderTree/FolderTree";
-import Button from "../ui/Button/Button";
-import IconButton from "../ui/IconButton/IconButton";
-import ButtonModal from "../ui/ModalButton/ModalButton";
+import Button from "../ui/buttons/Button/Button";
 import "./FolderTreeModal.scss";
 import { useMediaQuery } from "usehooks-ts";
+import IconButton from "../ui/buttons/IconButton/IconButton";
+import ModalButton from "../ui/buttons/ModalButton/ModalButton";
 export type FolderTreeModalProps = {
   className?: string;
 };
@@ -18,7 +18,7 @@ const FolderTreeModal = forwardRef<HTMLButtonElement, FolderTreeModalProps>(
     const onClosePress = useCallback(() => setOpen(false), [setOpen]);
     const isDesktop = useMediaQuery(`(min-width: ${WINDOW_BREAKPOINT}px)`);
     return (
-      <ButtonModal
+      <ModalButton
         isOpen={open}
         onOpenChange={setOpen}
         breakpoint={WINDOW_BREAKPOINT}
@@ -48,7 +48,7 @@ const FolderTreeModal = forwardRef<HTMLButtonElement, FolderTreeModalProps>(
           className="folder-tree-model__tree"
           setModalOpen={setOpen}
         />
-      </ButtonModal>
+      </ModalButton>
     );
   },
 );

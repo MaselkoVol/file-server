@@ -2,9 +2,9 @@ import { Cog8ToothIcon } from "@heroicons/react/16/solid";
 import { forwardRef, memo } from "react";
 import FolderSearch from "../FolderSearch/FolderSearch";
 import FolderTreeModal from "../FolderTreeModal/FolderTreeModal";
-import IconButton from "../ui/IconButton/IconButton";
 import Logo from "../ui/Logo/Logo";
 import "./Header.scss";
+import IconButton from "../ui/buttons/IconButton/IconButton";
 export type HeaderProps = {
   className?: string;
 };

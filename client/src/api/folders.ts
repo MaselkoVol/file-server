@@ -4,7 +4,7 @@ import type { ResponseType } from "../shared/types";
 import config from "../config";
 import type { FileType } from "./files";
 
-export type FolderType = { pathname: string };
+export type FolderType = { pathname: string; size: number; date: string };
 export type FolderContentType = {
   folders: FolderType[];
   files: FileType[];

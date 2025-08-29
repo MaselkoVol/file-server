@@ -1,12 +1,12 @@
 import { EllipsisVerticalIcon } from "@heroicons/react/16/solid";
 import { forwardRef, memo, useEffect, useState } from "react";
 import type { Selection } from "react-aria-components";
-import Checkbox from "../../ui/Checkbox/Checkbox";
-import IconButton from "../../ui/IconButton/IconButton";
 import type { FolderOption } from "../Folder";
 import "./FolderHeader.scss";
 import { FOLDER_BREAKPOINTS } from "../../../shared/constants";
 import { useTranslation } from "react-i18next";
+import IconButton from "../../ui/buttons/IconButton/IconButton";
+import Checkbox from "../../ui/inputs/Checkbox/Checkbox";
 
 export type FolderHeaderProps = {
   className?: string;

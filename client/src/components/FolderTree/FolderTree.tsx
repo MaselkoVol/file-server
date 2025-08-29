@@ -8,10 +8,10 @@ import {
   type Selection,
 } from "react-aria-components";
 import Icon from "../ui/Icon/Icon";
-import IconButton from "../ui/IconButton/IconButton";
 import "./FolderTree.scss";
 import { items } from "./mock";
 import { getSelectedKey } from "../../shared/utils/getSelectedKey";
+import IconButton from "../ui/buttons/IconButton/IconButton";
 
 export type FolderTreeOption = {
   id: number;

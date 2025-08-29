@@ -6,12 +6,10 @@ import {
   useMemo,
   useState,
 } from "react";
-import SearchAutocomplete, {
-  type SearchAutocompleteOption,
-} from "../ui/SearchAutocomplete/SearchAutocomplete";
 import { mockOptions } from "./mock";
 import "./FolderSearch.scss";
 import { getCaseInsensitiveRegex } from "../../shared/utils/getCaseInsensitiveRegex";
+import SearchAutocomplete, { type SearchAutocompleteOption } from "../ui/inputs/SearchAutocomplete/SearchAutocomplete";
 
 export type FolderSearchProps = {
   className?: string;

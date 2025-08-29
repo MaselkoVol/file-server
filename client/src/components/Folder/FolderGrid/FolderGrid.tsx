@@ -16,7 +16,7 @@ export type FolderGridProps = {
   options: FolderOption[];
 };
 
-export type modifiedFolderOption = FolderOption & {
+export type ModifiedFolderOption = FolderOption & {
   path: string;
   name: string;
   folderWidth: number;
@@ -36,7 +36,7 @@ const FolderGrid = forwardRef<HTMLDivElement, FolderGridProps>(
     );
     const canHover = useMediaQuery("(hover: hover)");
 
-    const modifiedOptions: modifiedFolderOption[] = useMemo(() => {
+    const modifiedOptions: ModifiedFolderOption[] = useMemo(() => {
       return options.map((option) => {
         const itemBase = createItemBase(option.pathname);
         return {
@@ -52,6 +52,7 @@ const FolderGrid = forwardRef<HTMLDivElement, FolderGridProps>(
       <GridList
         ref={ref}
         className={`${className} folder-grid`}
+        autoFocus
         aria-label="Folder items"
         selectionMode="multiple"
         selectionBehavior={canHover ? "replace" : "toggle"}

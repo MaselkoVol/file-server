@@ -11,19 +11,19 @@ import { type Selection } from "react-aria-components";
 import { useLocation } from "react-router";
 import { useResizeObserver } from "usehooks-ts";
 import { getFolderContent } from "../../api/folders";
+import { getRelativePathname } from "../../shared/utils/pathname";
 import Spinner from "../ui/Spinner/Spinner";
-import "./Folder.scss";
+import FolderBreadcrumbs from "./FolderBreadcrumbs/FolderBreadcrumbs";
 import FolderError from "./FolderError/FolderError";
 import FolderGrid from "./FolderGrid/FolderGrid";
 import FolderHeader from "./FolderHeader/FolderHeader";
-import { getRelativePathname } from "../../shared/utils/pathname";
-import FolderBreadcrumbs from "./FolderBreadcrumbs/FolderBreadcrumbs";
 
+import "./Folder.scss";
 export type FolderOption = {
   pathname: string;
   isFolder: boolean;
-  size?: number;
-  date?: Date;
+  size: number;
+  date: Date;
 };
 
 export type FolderProps = {
@@ -41,12 +41,16 @@ const Folder = forwardRef<HTMLDivElement, FolderProps>(({ className }, ref) => {
     queryFn: () => getFolderContent({ pathname: relativePathname }),
   });
 
+  const [selected, setSelected] = useState<Selection>(new Set());
+
   const options = useMemo(() => {
     if (!data) return [];
 
     const folders: FolderOption[] = data.folders.map((folder) => ({
       pathname: folder.pathname,
       isFolder: true,
+      size: folder.size,
+      date: new Date(folder.date),
     }));
     const files: FolderOption[] = data.files.map((file) => ({
       pathname: file.pathname,
@@ -54,10 +58,9 @@ const Folder = forwardRef<HTMLDivElement, FolderProps>(({ className }, ref) => {
       size: file.size,
       date: new Date(file.date),
     }));
+    setSelected(new Set([]));
     return [...folders, ...files];
   }, [data]);
-
-  const [selected, setSelected] = useState<Selection>(new Set());
 
   const folderRef = useRef<HTMLDivElement>(null);
   const { width: folderWidth } = useResizeObserver({
